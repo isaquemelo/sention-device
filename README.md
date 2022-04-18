@@ -24,10 +24,8 @@
 	- Se conectar ao wifi com dados passados por parametro (ok)
 	- Ligar rede wifi (ok)
 	- Desligar rede wifi (ok)
-	- Testar conexão com internet
-	- Necessidades finais:
-		- Retornar interface de rede ao fim
-	
+	- Testar conexão com internet (ok)
+
 - Modulo servidor:
 	- Criar servidor web 
 	- Desativar servidor web
