@@ -2,7 +2,7 @@ import wrappers.urequest as requests
 import network
 import time
 
-from constants import DEFAULT_AP_STATION_NAME, DEFAULT_AP_STATION_PASS, TIME_LIMIT_TO_CONNECT_TO_WIFI
+from constants import DEFAULT_AP_STATION_NAME, DEFAULT_AP_STATION_PASS, TESTING_INTERNET_SITE, TIME_LIMIT_TO_CONNECT_TO_WIFI
 
 ap = network.WLAN(network.AP_IF)
 sta_if = network.WLAN(network.STA_IF)
@@ -51,7 +51,7 @@ def test_internet_connection():
     print("Testing internet connection")
 
     try:
-        response = requests.get(url='https://www.google.com/')
+        response = requests.get(url=TESTING_INTERNET_SITE)
     except OSError:
         print("Failed to connect to internet")
         return False
