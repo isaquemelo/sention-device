@@ -3,6 +3,6 @@ from time import sleep
 
 start_wifi_network()
 connect_to_wifi("Facil", "12345678a")
-sleep(30)
-stop_wifi_network()
-sleep(30)
+sleep(60)
+# stop_wifi_network()
+# sleep(30)

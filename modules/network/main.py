@@ -1,5 +1,7 @@
 import network
-from constants import DEFAULT_AP_STATION_NAME, DEFAULT_AP_STATION_PASS
+import time
+
+from constants import DEFAULT_AP_STATION_NAME, DEFAULT_AP_STATION_PASS, TIME_LIMIT_TO_CONNECT_TO_WIFI
 
 ap = network.WLAN(network.AP_IF)
 sta_if = network.WLAN(network.STA_IF)
@@ -29,6 +31,16 @@ def connect_to_wifi(ssid, password):
         sta_if.active(True)
         sta_if.connect(ssid, password)
 
+        start = time.ticks_ms()
+
         while not sta_if.isconnected():
+            delta = time.ticks_diff(time.ticks_ms(), start)
+
+            if(delta > TIME_LIMIT_TO_CONNECT_TO_WIFI):
+                print('Failed to connect to provided Wi-Fi network')
+                return False
+
             pass
+
     print('Conected to Wi-Fi network')
+    return True
