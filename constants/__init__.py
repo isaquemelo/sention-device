@@ -1,0 +1,2 @@
+DEFAULT_AP_STATION_NAME = "Sention"
+DEFAULT_AP_STATION_PASS = "WelcomeToSention"
