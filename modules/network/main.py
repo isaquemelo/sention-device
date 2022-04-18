@@ -1,4 +1,4 @@
-import wrappers.urequest as requests
+import helpers.urequest as requests
 import network
 import time
 
