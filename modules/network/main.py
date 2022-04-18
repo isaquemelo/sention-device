@@ -1,3 +1,4 @@
+import wrappers.urequest as requests
 import network
 import time
 
@@ -44,3 +45,17 @@ def connect_to_wifi(ssid, password):
 
     print('Conected to Wi-Fi network')
     return True
+
+
+def test_internet_connection():
+    print("Testing internet connection")
+
+    try:
+        response = requests.get(url='https://www.google.com/')
+    except OSError:
+        print("Failed to connect to internet")
+        return False
+
+    if (len(response.content)):
+        print("Success connecting to internet")
+        return True
