@@ -21,7 +21,7 @@
 		- Ter amazenado um token valido no KVS
 		- Retornar token de autenticacao do usuario
 - Modulo de rede:
-	- Se conectar ao wifi com dados passados por parametro
+	- Se conectar ao wifi com dados passados por parametro (ok)
 	- Ligar rede wifi (ok)
 	- Desligar rede wifi (ok)
 	- Testar conexão com internet
