@@ -1,4 +1,4 @@
-import helpers.urequest as requests
+import libs.urequest as requests
 import network
 import time
 
@@ -40,8 +40,6 @@ def connect_to_wifi(ssid, password):
             if(delta > TIME_LIMIT_TO_CONNECT_TO_WIFI):
                 print('Failed to connect to provided Wi-Fi network')
                 return False
-
-            pass
 
     print('Conected to Wi-Fi network')
     print(sta_if.ifconfig())
