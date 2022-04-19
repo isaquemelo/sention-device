@@ -44,6 +44,7 @@ def connect_to_wifi(ssid, password):
             pass
 
     print('Conected to Wi-Fi network')
+    print(sta_if.ifconfig())
     return True
 
 
