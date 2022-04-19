@@ -1,7 +1,7 @@
 # sention-device
 - Modulo de armazenamento fixo: 
- 	- Armazenamento KVS
- 	- Ferramenta de limpeza total para limpar dados salvos
+ 	- Armazenamento KVS - ok
+ 	- Ferramenta de limpeza total para limpar dados salvos - ok
  	
 - Modulo de configuração inicial:
 	- Chama modulo de rede para criação/desativação da rede
