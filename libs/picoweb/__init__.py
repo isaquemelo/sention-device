@@ -10,6 +10,7 @@ import ure as re
 import uerrno
 import uasyncio as asyncio
 import libs.pkg_resources as pkg_resources
+import json
 
 from .utils import parse_qs
 
@@ -75,11 +76,13 @@ class HTTPRequest:
     def __init__(self):
         pass
 
-    def read_form_data(self):
+    def read_json_body(self):
         size = int(self.headers[b"Content-Length"])
         data = yield from self.reader.readexactly(size)
-        form = parse_qs(data.decode())
+        form = json.loads(data)
         self.form = form
+
+        return self.form
 
     def parse_qs(self):
         form = parse_qs(self.qs)

@@ -1,26 +1,38 @@
 import libs.ulogging as logging
 import libs.picoweb as picoweb
+import json
+
+from modules.network import connect_to_wifi
 
 
-def index(req, resp):
-    yield from picoweb.start_response(resp, content_type="application/json; charset=utf-8")
+async def ping(req, resp):
+    await picoweb.start_response(resp, content_type="application/json; charset=utf-8")
+    await resp.awrite(json.dumps({"ping": "pong"}))
 
-    indexFile = open('modules/server/web/index.html', 'r')
 
-    for line in indexFile:
-        yield from resp.awrite(line)
-    # yield from app.render_template(resp, "modules/server/web/index.html", (req,))
+async def credentials(req, resp):
+    if req.method == "POST":
+        body = await req.read_json_body()
+
+        network = body['network']
+        user = body['user']
+
+        print(network, user)
+
+        success = connect_to_wifi(network['ssid'], network['password'])
+
+        if(success):
+            print("Aeee")
+
+        await picoweb.start_response(resp, content_type="application/json; charset=utf-8")
+
+    else:
+        picoweb.http_error(resp, 500)
 
 
 ROUTES = [
-    ("/", index),
-    # ("/squares", squares),
-    # (re.compile("^/(.+)"), lambda req, resp: (yield from app.sendfile(resp,
-    #  "/modules/server/web/" + req.url_match.group(1)))),
-    # ("/file", lambda req, resp: (yield from app.sendfile(resp, "example_webapp.py"))),
-    # ... or match using a regex, the match result available as req.url_match
-    # for match group extraction in your view.
-    # (re.compile("^/iam/(.+)"), hello),
+    ("/ping", ping),
+    ("/credentials", credentials),
 ]
 
 app = picoweb.WebApp(__name__, ROUTES)
@@ -32,5 +44,4 @@ def start_api():
     # 0 (False) normal logging: requests and errors
     # 1 (True) debug logging
     # 2 extra debug logging
-    app.run(debug=2, host='192.168.4.1', port=80)
-    # app.run(debug=1, log=False)
+    app.run(debug=0, host='192.168.18.16', port=80)
