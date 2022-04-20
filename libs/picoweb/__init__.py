@@ -9,7 +9,7 @@ import uio
 import ure as re
 import uerrno
 import uasyncio as asyncio
-# import pkg_resources
+import libs.pkg_resources as pkg_resources
 
 from .utils import parse_qs
 
@@ -24,7 +24,10 @@ def get_mime_type(fname):
     if fname.endswith(".css"):
         return "text/css"
     if fname.endswith(".png") or fname.endswith(".jpg"):
-        return "image"
+        return "image/png"
+    if fname.endswith(".js"):
+        return "application/javascript"
+
     return "text/plain"
 
 

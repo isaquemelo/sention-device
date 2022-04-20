@@ -1,48 +1,36 @@
 import libs.ulogging as logging
-import re
 import libs.picoweb as picoweb
 
 
 def index(req, resp):
-    # You can construct an HTTP response completely yourself, having
-    # a full control of headers sent...
-    yield from resp.awrite("HTTP/1.0 200 OK\r\n")
-    yield from resp.awrite("Content-Type: text/html\r\n")
-    yield from resp.awrite("\r\n")
-    yield from resp.awrite("I can show you a table of <a href='squares'>squares</a>.<br/>")
-    yield from resp.awrite("Or my <a href='file'>source</a>.")
+    yield from picoweb.start_response(resp, content_type="application/json; charset=utf-8")
 
+    indexFile = open('modules/server/web/index.html', 'r')
 
-def squares(req, resp):
-    # Or can use a convenience function start_response() (see its source for
-    # extra params it takes).
-    yield from picoweb.start_response(resp)
-    yield from app.render_template(resp, "squares.tpl", (req,))
-
-
-def hello(req, resp):
-    yield from picoweb.start_response(resp)
-    # Here's how you extract matched groups from a regex URI match
-    yield from resp.awrite("Hello " + req.url_match.group(1))
+    for line in indexFile:
+        yield from resp.awrite(line)
+    # yield from app.render_template(resp, "modules/server/web/index.html", (req,))
 
 
 ROUTES = [
-    # You can specify exact URI string matches...
     ("/", index),
-    ("/squares", squares),
-    ("/file", lambda req, resp: (yield from app.sendfile(resp, "example_webapp.py"))),
+    # ("/squares", squares),
+    # (re.compile("^/(.+)"), lambda req, resp: (yield from app.sendfile(resp,
+    #  "/modules/server/web/" + req.url_match.group(1)))),
+    # ("/file", lambda req, resp: (yield from app.sendfile(resp, "example_webapp.py"))),
     # ... or match using a regex, the match result available as req.url_match
     # for match group extraction in your view.
-    (re.compile("^/iam/(.+)"), hello),
+    # (re.compile("^/iam/(.+)"), hello),
 ]
 
+app = picoweb.WebApp(__name__, ROUTES)
 
-def app():
-    app = picoweb.WebApp(__name__, ROUTES)
+
+def start_api():
     # debug values:
     # -1 disable all logging
     # 0 (False) normal logging: requests and errors
     # 1 (True) debug logging
     # 2 extra debug logging
-    app.run(debug=0, host='192.168.18.16', port=80)
+    app.run(debug=2, host='192.168.4.1', port=80)
     # app.run(debug=1, log=False)
