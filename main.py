@@ -1,3 +1,5 @@
+from constants import CREATE_NEW_DEVICE_URL
+import libs.request as request
 from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_network, test_internet_connection
 from time import sleep
 
@@ -5,8 +7,8 @@ from modules.server import start_api
 # from modules.storage import KeyValueStorage
 
 
-connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
-# start_wifi_network()
+# connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
+start_wifi_network()
 # connected = connect_to_wifi("Facil", "12345678a")
 
 # if(connected):

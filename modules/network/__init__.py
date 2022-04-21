@@ -1,4 +1,4 @@
-import libs.urequest as requests
+import libs.request as requests
 import network
 import time
 

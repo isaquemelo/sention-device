@@ -15,7 +15,7 @@
 		- Retornar todos os dados armazenados
 		
 - Modulo de autenticação:
-	- Efetua requisição de auth utilizando dados do usuario e armazena o token para uso
+	- Efetua requisição de auth utilizando dados do usuario e armazena o token para uso (ok)
 	- Necessidades finais:
 		- Receber user e password como parametros
 		- Ter amazenado um token valido no KVS
@@ -27,14 +27,9 @@
 	- Testar conexão com internet (ok)
 
 - Modulo servidor:
-	- Criar servidor web 
+	- Criar servidor web (ok)
 	- Desativar servidor web
-	- Fornecer paginas de configuração inicial
-	- Disponibiliza rotas para:
-		- Validar e depois salvar dados de rede (SSID, password)
-		- Salvar deviceId (cria deviceId (atraves da criação de um access code))
-		- Validar e depois salvar user / password
-	
+	- Fornecer API de configuração inicial (ok)
 - Modulo gerente:
 	- Chama modulo de configuração se necessário
 	- Chama module de rede para se conectar ao wifi

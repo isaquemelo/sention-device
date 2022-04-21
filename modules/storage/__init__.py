@@ -3,13 +3,21 @@ import json
 from constants import KVS_FILE_NAME, KVS_FILE_PATH
 
 
-class KeyValueStorage:
+class __KeyValueStorage:
+    _instance = None
+
     def __init__(self):
         self.store = {}
         self.__target_file = f'{KVS_FILE_PATH}{KVS_FILE_NAME}'
 
         with open(self.__target_file) as file_content:
             self.store = json.load(file_content)
+
+    @classmethod
+    def instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     def get(self, key):
         print(f'Getting "{key}" from KVS')
@@ -32,3 +40,7 @@ class KeyValueStorage:
 
     def get_store(self):
         return self.store
+
+
+def get_kvs():
+    return __KeyValueStorage.instance()

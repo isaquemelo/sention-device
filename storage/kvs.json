@@ -1,1 +1,10 @@
-{}
+{
+    "WIFI_SSID": "",
+    "WIFI_PASSWORD": "",
+    "USER_LOGIN": "",
+    "USER_PASSWORD": "",
+    "DEVICE_ID": "",
+    "ACCESS_CODE": "",
+    "USER_ID": "",
+    "CONFIGURED": ""
+}
