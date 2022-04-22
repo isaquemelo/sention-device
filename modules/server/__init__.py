@@ -28,6 +28,9 @@ async def credentials(req, resp):
 
         if(success):
             try:
+
+                print(user)
+
                 kvs = get_kvs()
 
                 # Saves the network credentials
@@ -68,7 +71,7 @@ async def credentials(req, resp):
         else:
             return picoweb.http_error(resp, 500)
     else:
-        picoweb.http_error(resp, 500)
+        return picoweb.http_error(resp, 500)
 
 
 ROUTES = [
