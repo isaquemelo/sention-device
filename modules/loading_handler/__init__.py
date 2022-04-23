@@ -7,7 +7,7 @@ from modules.network import connect_to_wifi
 from modules.auth import generate_token
 from machine import Pin
 
-#from modules.loading_handler import sensor_classes
+from modules.loading_handler.DigitalActuator import DigitalActuator
 from modules.loading_handler.sensor_classes import sensor_classes
 
 from time import sleep
@@ -42,15 +42,13 @@ def setup_pins_and_imports(user_preferences):
         sensor_port = sensor["port"]
 
         sensor_instance = sensor_classes[sensor_type](sensor_port)
-        #print(sensor_port)
-        #sensor_instance = DigitalSensor(sensor_port)
         sensors_instance[sensor_id] = sensor_instance
 
-    
+    """
     while True:
         for key, value in sensors_instance.items(): print(key, '->', value.get_data())
         sleep(2)
-    
+    """
 
     actuators_instance = {}
     for actuator in actuators:
@@ -63,7 +61,4 @@ def setup_pins_and_imports(user_preferences):
 
     #for key, value in actuators_instance.items(): print(key, '->', value.port, value.triggers)
         
-
-    
-
-    return False
+    return sensors_instance, actuators_instance
