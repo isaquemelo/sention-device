@@ -1,6 +1,6 @@
 class ISensor:
 
-    def __init__(pinOrpins):
+    def __init__(self, port):
         pass
 
     def get_data():
