@@ -43,7 +43,6 @@ def setup_pins_and_imports(user_preferences):
 
         #sensor_instance = BMP280Class(sensor_port)
         sensor_instance = AnalogicSensor(sensor_port)
-
         sensors_instance[sensor_id] = sensor_instance
 
     """
