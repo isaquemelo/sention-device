@@ -2,14 +2,13 @@ from constants import GET_DEVICE_URL
 import libs.request as request
 import libs.ulogging as logging
 import libs.picoweb as picoweb
-from modules.loading_handler.AnalogicSensor import AnalogicSensor
-from modules.loading_handler.DigitalActuator import DigitalActuator
-from modules.loading_handler.BMP280Sensor import BMP280Class
-from modules.loading_handler.DigitalSensor import DigitalSensor
 
 from modules.network import connect_to_wifi
 from modules.auth import generate_token
 from machine import Pin
+
+#from modules.loading_handler import sensor_classes
+from modules.loading_handler.sensor_classes import sensor_classes
 
 from time import sleep
 
@@ -42,8 +41,9 @@ def setup_pins_and_imports(user_preferences):
         sensor_type = sensor["type"]
         sensor_port = sensor["port"]
 
-        #sensor_instance = BMP280Class(sensor_port)
-        sensor_instance = DigitalSensor(sensor_port)
+        sensor_instance = sensor_classes[sensor_type](sensor_port)
+        #print(sensor_port)
+        #sensor_instance = DigitalSensor(sensor_port)
         sensors_instance[sensor_id] = sensor_instance
 
     
