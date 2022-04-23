@@ -2,6 +2,7 @@ from constants import GET_DEVICE_URL
 import libs.request as request
 import libs.ulogging as logging
 import libs.picoweb as picoweb
+from modules.loading_handler.AnalogicSensor import AnalogicSensor
 from modules.loading_handler.DigitalActuator import DigitalActuator
 from modules.loading_handler.BMP280Sensor import BMP280Class
 
@@ -40,14 +41,16 @@ def setup_pins_and_imports(user_preferences):
         sensor_type = sensor["type"]
         sensor_port = sensor["port"]
 
-        sensor_instance = BMP280Class(sensor_port)
+        #sensor_instance = BMP280Class(sensor_port)
+        sensor_instance = AnalogicSensor(sensor_port)
 
         sensors_instance[sensor_id] = sensor_instance
 
-
-    for key, value in sensors_instance.items(): print(key, '->', value.get_data())
-
-
+    """
+    while True:
+        for key, value in sensors_instance.items(): print(key, '->', value.get_data())
+        sleep(2)
+    """
 
     actuators_instance = {}
     for actuator in actuators:

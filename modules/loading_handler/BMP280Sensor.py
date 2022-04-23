@@ -1,6 +1,6 @@
 from modules.loading_handler.ISensor import ISensor
 
-from machine import Pin, I2C, SoftI2C
+from machine import Pin, I2C
 from libs.BMP280 import BMP280
 
 class BMP280Class(ISensor):
