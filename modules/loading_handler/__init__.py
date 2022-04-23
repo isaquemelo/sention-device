@@ -45,7 +45,7 @@ def setup_pins_and_imports(user_preferences):
         sensors_instance[sensor_id] = sensor_instance
 
 
-    #for key, value in sensors_instance.items(): print(key, '->', value.get_data())
+    for key, value in sensors_instance.items(): print(key, '->', value.get_data())
 
 
 
