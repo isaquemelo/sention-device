@@ -3,7 +3,7 @@ import libs.request as request
 import libs.ulogging as logging
 import libs.picoweb as picoweb
 from modules.loading_handler.DigitalActuator import DigitalActuator
-from modules.loading_handler.BMP280Class import BMP280Class
+from modules.loading_handler.BMP280Sensor import BMP280Class
 
 from modules.network import connect_to_wifi
 from modules.auth import generate_token
