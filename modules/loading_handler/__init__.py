@@ -5,6 +5,7 @@ import libs.picoweb as picoweb
 from modules.loading_handler.AnalogicSensor import AnalogicSensor
 from modules.loading_handler.DigitalActuator import DigitalActuator
 from modules.loading_handler.BMP280Sensor import BMP280Class
+from modules.loading_handler.DigitalSensor import DigitalSensor
 
 from modules.network import connect_to_wifi
 from modules.auth import generate_token
@@ -42,14 +43,14 @@ def setup_pins_and_imports(user_preferences):
         sensor_port = sensor["port"]
 
         #sensor_instance = BMP280Class(sensor_port)
-        sensor_instance = AnalogicSensor(sensor_port)
+        sensor_instance = DigitalSensor(sensor_port)
         sensors_instance[sensor_id] = sensor_instance
 
-    """
+    
     while True:
         for key, value in sensors_instance.items(): print(key, '->', value.get_data())
         sleep(2)
-    """
+    
 
     actuators_instance = {}
     for actuator in actuators:
