@@ -6,5 +6,6 @@
     "DEVICE_ID": "",
     "ACCESS_CODE": "",
     "USER_ID": "",
-    "CONFIGURED": ""
+    "CONFIGURED": "",
+    "AUTH_TOKEN": ""
 }

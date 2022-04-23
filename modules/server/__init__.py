@@ -7,7 +7,7 @@ import libs.request as request
 import libs.ulogging as logging
 import libs.picoweb as picoweb
 
-from modules.auth import get_token
+from modules.auth import generate_token
 from modules.network import connect_to_wifi
 from modules.storage import get_kvs
 
@@ -29,8 +29,6 @@ async def credentials(req, resp):
         if(success):
             try:
 
-                print(user)
-
                 kvs = get_kvs()
 
                 # Saves the network credentials
@@ -51,7 +49,7 @@ async def credentials(req, resp):
                 kvs.set('USER_ID', response_data['userId'])
 
                 # Creates user token to be used to associate device to user
-                token = get_token(user['username'], user['password'])
+                token = generate_token(user['username'], user['password'])
 
                 body = json.dumps({"accessCode": response_data['accessCode']})
 
@@ -66,7 +64,8 @@ async def credentials(req, resp):
                 if(await resp.awrite(response.text)):
                     machine.reset()
 
-            except:
+            except Exception as e:
+                print(e)
                 return picoweb.http_error(resp, 500)
         else:
             return picoweb.http_error(resp, 500)
