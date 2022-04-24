@@ -11,27 +11,29 @@ from modules.loading_handler.DigitalActuator import DigitalActuator
 from modules.loading_handler.sensor_classes import sensor_classes
 
 from time import sleep
+import _thread
 
 from modules.storage import get_kvs
 
+
 def loading_module():
-    user_preferences = get_user_preferences("285cc101-e76e-4a5e-b69f-e8fe9e5da73f")
-    setup_pins_and_imports(user_preferences)
+    kvs = get_kvs()
+    device_id = kvs.get("DEVICE_ID")
+
+    user_preferences = get_user_preferences(device_id)
+    return setup_pins_and_imports(user_preferences)
+
 
 def get_user_preferences(device_id):
+    kvs = get_kvs()
+    auth_token = kvs.get("AUTH_TOKEN")
 
-    connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
-
-    #kvs = get_kvs()
-    #auth_token = kvs.get("AUTH_TOKEN")
-    auth_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlYjA0YjlhLTk0ZTAtNDU5NC05MDUzLTdlZDllMzliN2ZhZCIsImlhdCI6MTY1MDY2ODg1OCwiZXhwIjoxNjUxOTY0ODU4fQ.jBVb4PKiO-jrjTZ8DOCCn34u_1GEHGx-fWFqLtAiqXE"
-    
-    response = request.get(GET_DEVICE_URL + device_id, headers={'Authorization': auth_token})
-    #print(response.json())
+    response = request.get(GET_DEVICE_URL + device_id,
+                           headers={'Authorization': auth_token})
     return response.json()
 
-def setup_pins_and_imports(user_preferences):
 
+def setup_pins_and_imports(user_preferences):
     sensors = user_preferences["sensors"]
     actuators = user_preferences["actuators"]
 
@@ -44,21 +46,23 @@ def setup_pins_and_imports(user_preferences):
         sensor_instance = sensor_classes[sensor_type](sensor_port)
         sensors_instance[sensor_id] = sensor_instance
 
-    """
-    while True:
-        for key, value in sensors_instance.items(): print(key, '->', value.get_data())
-        sleep(2)
-    """
+    def display_sensor_readings():
+        while True:
+            for key, value in sensors_instance.items():
+                print(key, '->', value.get_data())
+            sleep(2)
+
+    # _thread.start_new_thread(display_sensor_readings, ())
 
     actuators_instance = {}
     for actuator in actuators:
         actuator_id = actuator["id"]
         actuator_port = actuator["port"]
         actuator_triggers = actuator["triggers"]
+
         actuator_instance = DigitalActuator(actuator_port, actuator_triggers)
-        
         actuators_instance[actuator_id] = actuator_instance
 
     #for key, value in actuators_instance.items(): print(key, '->', value.port, value.triggers)
-        
+
     return sensors_instance, actuators_instance

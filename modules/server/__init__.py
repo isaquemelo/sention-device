@@ -41,12 +41,11 @@ async def credentials(req, resp):
 
                 # Generate a new device ID for the current device
                 response = request.post(CREATE_NEW_DEVICE_URL)
-                response_data = json.loads(response.text)
+                response_data = response.json()
 
                 # Save created device to futher usage
                 kvs.set('DEVICE_ID', response_data['id'])
                 kvs.set('ACCESS_CODE', response_data['accessCode'])
-                kvs.set('USER_ID', response_data['userId'])
 
                 # Creates user token to be used to associate device to user
                 token = generate_token(user['username'], user['password'])
@@ -55,6 +54,10 @@ async def credentials(req, resp):
 
                 response = request.post(ASSOCIATE_DEVICE_USER_URL, data=body, headers={
                     'Authorization': token, 'content-type': 'application/json'})
+                response_data = response.json()
+
+                # Saves associated userId
+                kvs.set('USER_ID', response_data['userId'])
 
                 # Set the device has configured to use
                 kvs.set('CONFIGURED', True)

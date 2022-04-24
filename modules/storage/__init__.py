@@ -10,8 +10,14 @@ class __KeyValueStorage:
         self.store = {}
         self.__target_file = f'{KVS_FILE_PATH}{KVS_FILE_NAME}'
 
-        with open(self.__target_file) as file_content:
-            self.store = json.load(file_content)
+        try:
+            with open(self.__target_file) as file_content:
+                content = file_content.read()
+                self.store = json.loads(content)
+
+        except OSError:
+            with open(self.__target_file, 'w+') as file_content:
+                json.dump({}, file_content)
 
     @classmethod
     def instance(cls):

@@ -5,12 +5,21 @@ from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_netwo
 from time import sleep
 
 from modules.server import start_api
-# from modules.storage import KeyValueStorage
+from modules.storage import get_kvs
 
-loading_module()
 
-# connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
-#start_wifi_network()
+# start_wifi_network()
+connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
+# kvs = get_kvs()
+# kvs.wipe()
+# print(kvs.get_store())
+(sensors, actuators) = loading_module()
+
+while True:
+    # print("while")
+    for actuator_id, actuator in actuators.items():
+        actuator.execute_triggers(sensors)
+    # sleep(1)
 # connected = connect_to_wifi("Facil", "12345678a")
 
 # if(connected):
@@ -28,4 +37,4 @@ loading_module()
 # stop_wifi_network()
 # sleep(30)
 
-#start_api()
+# start_api()

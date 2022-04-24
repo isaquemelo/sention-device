@@ -37,17 +37,17 @@
 	- Chama modulo de carregamento
 	- Chama modulo de processamento
 	
-- Modulo de carregamento:
+- Modulo de carregamento (ok):
 	- Requisita configuração do usuario:
 		- Se estiverem vazias continua em loop solicitando as configurações
 	- Configura pinos e importações necessarias dado as configurações do usuario
 
-- Modulo de processamento:
+- Modulo de processamento (ok):
 	- Lê dados dos sensores
 	- Passa dados dos sensores para o modulo de atuação
 	- Passa dados dos sensores para o modulo de contato
 	
-- Modulo de atuação:
+- Modulo de atuação (ok):
 	- Recebe dados de sensores e verifica se algum atuador deve ser acionado
 	
 - Modulo de contato:
