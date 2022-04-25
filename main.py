@@ -4,8 +4,9 @@ from modules.loading_handler import get_user_preferences, loading_module, setup_
 from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_network, test_internet_connection
 from time import sleep
 
-from modules.server import start_api
+from modules.server import start_api, stop_api
 from modules.storage import get_kvs
+import _thread
 
 
 # start_wifi_network()
@@ -13,13 +14,13 @@ connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
 # kvs = get_kvs()
 # kvs.wipe()
 # print(kvs.get_store())
-(sensors, actuators) = loading_module()
+# (sensors, actuators) = loading_module()
 
-while True:
-    # print("while")
-    for actuator_id, actuator in actuators.items():
-        actuator.execute_triggers(sensors)
-    # sleep(1)
+# while True:
+#     # print("while")
+#     for actuator_id, actuator in actuators.items():
+#         actuator.execute_triggers(sensors)
+# sleep(1)
 # connected = connect_to_wifi("Facil", "12345678a")
 
 # if(connected):
@@ -37,4 +38,14 @@ while True:
 # stop_wifi_network()
 # sleep(30)
 
-# start_api()
+
+# def start_api_background():
+#     print("start_api after")
+#     start_api()
+
+
+# _thread.start_new_thread(start_api_background, ())
+# print("after thread")
+# sleep(30)
+# stop_api()
+# print("fim loop cabo")

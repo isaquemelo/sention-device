@@ -90,4 +90,10 @@ def start_api():
     # 0 (False) normal logging: requests and errors
     # 1 (True) debug logging
     # 2 extra debug logging
-    app.run(debug=0, host='192.168.4.1', port=80)
+    # app.run(debug=0, host='192.168.4.1', port=80)
+    app.run(debug=0, host='192.168.18.35', port=80)
+
+
+def stop_api():
+    print("stop_api")
+    app.close()
