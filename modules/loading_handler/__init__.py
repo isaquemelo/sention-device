@@ -53,7 +53,7 @@ def setup_pins_and_imports(user_preferences):
         sensors_instance[sensor_id] = sensor_instance
 
 
-    display_sensor_readings(sensors_instance)
+    #display_sensor_readings(sensors_instance)
 
     actuators_instance = {}
     for actuator in actuators:

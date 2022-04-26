@@ -3,7 +3,7 @@ import libs.request as request
 from modules.loading_handler import get_user_preferences, loading_module, setup_pins_and_imports
 from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_network, test_internet_connection
 from time import sleep
-from modules.save_sensor_data_to_cloud import save_sensor_data_to_cloud
+from modules.contact_cloud import save_sensor_data_to_cloud
 
 from modules.server import start_api, stop_api
 from modules.storage import get_kvs
@@ -12,12 +12,32 @@ import _thread
 
 # start_wifi_network()
 #connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
+
 connected = connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
+
 # kvs = get_kvs()
 # kvs.wipe()
 # print(kvs.get_store())
 
-(sensors, actuators) = loading_module()
+#(sensors, actuators) = loading_module()
+
+list_sensors_data = [
+		{
+			"id": "302c0573-149c-492a-8711-9d1a18438f85",
+			"data": -123
+		}, 
+		{
+			"id": "48e86d3a-53e5-48e2-ae64-15f9f9a62ee8",
+			"data": {
+					"TEMPERATURE": 123,
+					"PRESSURE": 321,
+					"ALTITUDE": 123
+			}
+		}
+	]
+
+save_sensor_data_to_cloud(list_sensors_data)
+
 # (sensors, actuators) = loading_module()
 
 # while True:
