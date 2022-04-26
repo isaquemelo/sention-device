@@ -1,5 +1,5 @@
 # sention-device
-- Modulo de armazenamento fixo: 
+- Modulo de armazenamento fixo (ok): 
  	- Armazenamento KVS - ok
  	- Ferramenta de limpeza total para limpar dados salvos - ok
  	
@@ -14,21 +14,21 @@
 			- user, password
 		- Retornar todos os dados armazenados
 		
-- Modulo de autenticação:
+- Modulo de autenticação (ok):
 	- Efetua requisição de auth utilizando dados do usuario e armazena o token para uso (ok)
 	- Necessidades finais:
 		- Receber user e password como parametros
 		- Ter amazenado um token valido no KVS
 		- Retornar token de autenticacao do usuario
-- Modulo de rede:
+- Modulo de rede (ok):
 	- Se conectar ao wifi com dados passados por parametro (ok)
 	- Ligar rede wifi (ok)
 	- Desligar rede wifi (ok)
 	- Testar conexão com internet (ok)
 
-- Modulo servidor:
+- Modulo servidor (ok):
 	- Criar servidor web (ok)
-	- Desativar servidor web
+	- Desativar servidor web (ok)
 	- Fornecer API de configuração inicial (ok)
 - Modulo gerente:
 	- Chama modulo de configuração se necessário
