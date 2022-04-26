@@ -32,6 +32,12 @@ def get_user_preferences(device_id):
                            headers={'Authorization': auth_token})
     return response.json()
 
+def display_sensor_readings(sensors_instance):
+    while True:
+        for key, value in sensors_instance.items():
+            print(key, '->', value.get_data())
+        sleep(2)
+
 
 def setup_pins_and_imports(user_preferences):
     sensors = user_preferences["sensors"]
@@ -46,13 +52,8 @@ def setup_pins_and_imports(user_preferences):
         sensor_instance = sensor_classes[sensor_type](sensor_port)
         sensors_instance[sensor_id] = sensor_instance
 
-    def display_sensor_readings():
-        while True:
-            for key, value in sensors_instance.items():
-                print(key, '->', value.get_data())
-            sleep(2)
 
-    # _thread.start_new_thread(display_sensor_readings, ())
+    display_sensor_readings(sensors_instance)
 
     actuators_instance = {}
     for actuator in actuators:
