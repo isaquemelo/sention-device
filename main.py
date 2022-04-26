@@ -5,7 +5,7 @@ from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_netwo
 from time import sleep
 from modules.save_sensor_data_to_cloud import save_sensor_data_to_cloud
 
-from modules.server import start_api
+from modules.server import start_api, stop_api
 from modules.storage import get_kvs
 import _thread
 
@@ -18,12 +18,14 @@ connected = connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
 # print(kvs.get_store())
 
 (sensors, actuators) = loading_module()
+# (sensors, actuators) = loading_module()
 
 # while True:
 #     # print("while")
 #     for actuator_id, actuator in actuators.items():
 #         actuator.execute_triggers(sensors)
     # sleep(1)
+# sleep(1)
 # connected = connect_to_wifi("Facil", "12345678a")
 
 # if(connected):
@@ -41,4 +43,14 @@ connected = connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
 # stop_wifi_network()
 # sleep(30)
 
-# start_api()
+
+# def start_api_background():
+#     print("start_api after")
+#     start_api()
+
+
+# _thread.start_new_thread(start_api_background, ())
+# print("after thread")
+# sleep(30)
+# stop_api()
+# print("fim loop cabo")
