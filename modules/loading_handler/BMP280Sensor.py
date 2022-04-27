@@ -10,10 +10,10 @@ class BMP280Sensor(ISensor):
         bmp_bus = I2C(0, scl=Pin(port["SLC"]), sda=Pin(port["SDA"]))
         self.bmp = BMP280(bmp_bus)
 
-    def get_data(self, dataSource="TEMPERATURE"):
+    def get_data(self, dataSource=False):
         data = {}
         data["TEMPERATURE"] = self.bmp.getTemp()
         data["PRESSURE"] = self.bmp.getPress()
         data["ALTITUDE"] = self.bmp.getAltitude()
 
-        return data[dataSource]
+        return data[dataSource] if dataSource else data

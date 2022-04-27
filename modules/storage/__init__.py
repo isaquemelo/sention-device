@@ -26,7 +26,7 @@ class __KeyValueStorage:
         return cls._instance
 
     def get(self, key):
-        print(f'Getting "{key}" from KVS')
+        # print(f'Getting "{key}" from KVS')
 
         if key not in self.store:
             return False

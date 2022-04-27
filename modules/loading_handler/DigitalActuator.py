@@ -34,7 +34,7 @@ class DigitalActuator(IActuator):
             else:
                 sensor_value = sensor_instance.get_data()
 
-            print(sensor_id, "=>", sensor_value)
+            # print(sensor_id, "=>", sensor_value)
 
             if logic_operator == "GREATER_THAN":
                 if(sensor_value > value):
