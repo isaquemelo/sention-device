@@ -29,12 +29,12 @@ class DigitalActuator(IActuator):
             sensor_instance = sensors_instance[sensor_id]
             sensor_value = False
 
-            if(len(sensor_data_source)):
+            if len(sensor_data_source) >= 1:
                 sensor_value = sensor_instance.get_data(sensor_data_source)
             else:
                 sensor_value = sensor_instance.get_data()
 
-            # print(sensor_id, "=>", sensor_value)
+            #print(sensor_id, "=>", sensor_value)
 
             if logic_operator == "GREATER_THAN":
                 if(sensor_value > value):
