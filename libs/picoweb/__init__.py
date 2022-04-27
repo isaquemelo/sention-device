@@ -335,5 +335,10 @@ class WebApp:
         loop = asyncio.get_event_loop()
         if debug > 0:
             print("* Running on http://%s:%s/" % (host, port))
+
+        self.loop = loop
         self.serve(loop, host, port)
         loop.close()
+
+    def close(self):
+        self.loop.close()

@@ -3,9 +3,9 @@ import libs.request as request
 from modules.loading_handler import get_user_preferences, loading_module, setup_pins_and_imports
 from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_network, test_internet_connection
 from time import sleep
-from modules.save_sensor_data_to_cloud import save_sensor_data_to_cloud
+from modules.contact_cloud import save_sensor_data_to_cloud
 
-from modules.server import start_api
+from modules.server import start_api, stop_api
 from modules.storage import get_kvs
 import _thread
 
@@ -44,4 +44,14 @@ has_connection = test_internet_connection()
 # stop_wifi_network()
 # sleep(30)
 
-# start_api()
+
+# def start_api_background():
+#     print("start_api after")
+#     start_api()
+
+
+# _thread.start_new_thread(start_api_background, ())
+# print("after thread")
+# sleep(30)
+# stop_api()
+# print("fim loop cabo")
