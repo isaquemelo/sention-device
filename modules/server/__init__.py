@@ -1,4 +1,6 @@
 import json
+from time import sleep
+import uasyncio
 import machine
 
 from constants import ASSOCIATE_DEVICE_USER_URL, CREATE_NEW_DEVICE_URL
@@ -15,6 +17,26 @@ from modules.storage import get_kvs
 async def ping(req, resp):
     await picoweb.start_response(resp, content_type="application/json; charset=utf-8")
     await resp.awrite(json.dumps({"ping": "pong"}))
+
+
+def reboot(req, resp):
+    if req.method == "POST":
+        body = yield from req.read_json_body()
+
+        user = body['user']
+        username = user['username']
+        password = user['password']
+
+        kvs = get_kvs()
+        print(kvs.get('USER_LOGIN'), kvs.get('USER_PASSWORD'))
+        if username == kvs.get('USER_LOGIN') and password == kvs.get('USER_PASSWORD'):
+            machine.reset()
+        else:
+            return (yield from picoweb.http_error(resp, "500"))
+
+    yield from picoweb.http_error(resp, "500")
+
+    # await picoweb.http_error(resp, "500")
 
 
 async def credentials(req, resp):
@@ -62,10 +84,9 @@ async def credentials(req, resp):
                 # Set the device has configured to use
                 kvs.set('CONFIGURED', True)
 
-                await picoweb.start_response(resp, content_type="application/json; charset=utf-8")
-
-                if(await resp.awrite(response.text)):
-                    machine.reset()
+                await picoweb.start_response(
+                    resp, content_type="application/json; charset=utf-8")
+                await resp.awrite(response.text)
 
             except Exception as e:
                 print(e)
@@ -79,6 +100,7 @@ async def credentials(req, resp):
 ROUTES = [
     ("/ping", ping),
     ("/credentials", credentials),
+    ("/reboot", reboot),
 ]
 
 app = picoweb.WebApp(__name__, ROUTES)

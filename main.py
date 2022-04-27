@@ -11,19 +11,22 @@ import _thread
 
 
 # start_wifi_network()
-#connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
-connected = connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
+connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
+
+has_connection = test_internet_connection()
+
+# connected = connect_to_wifi("ERICK_PIMENTEL", "6B896DBDE2")
 # kvs = get_kvs()
 # kvs.wipe()
 # print(kvs.get_store())
 
-(sensors, actuators) = loading_module()
+# (sensors, actuators) = loading_module()
 
 # while True:
 #     # print("while")
 #     for actuator_id, actuator in actuators.items():
 #         actuator.execute_triggers(sensors)
-    # sleep(1)
+# sleep(1)
 # connected = connect_to_wifi("Facil", "12345678a")
 
 # if(connected):

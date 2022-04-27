@@ -30,7 +30,14 @@ def get_user_preferences(device_id):
 
     response = request.get(GET_DEVICE_URL + device_id,
                            headers={'Authorization': auth_token})
-    return response.json()
+
+    try:
+        preferences = response.json()
+    except Exception:
+        preferences = False
+
+    return preferences
+
 
 def display_sensor_readings(sensors_instance):
     while True:
@@ -51,9 +58,6 @@ def setup_pins_and_imports(user_preferences):
 
         sensor_instance = sensor_classes[sensor_type](sensor_port)
         sensors_instance[sensor_id] = sensor_instance
-
-
-    display_sensor_readings(sensors_instance)
 
     actuators_instance = {}
     for actuator in actuators:

@@ -3,7 +3,7 @@
  	- Armazenamento KVS - ok
  	- Ferramenta de limpeza total para limpar dados salvos - ok
  	
-- Modulo de configuração inicial:
+- Modulo de configuração inicial (ok):
 	- Chama modulo de rede para criação/desativação da rede
 	- Chama modulo de servidor para fornecer interface para o usuario
 	- Define conexão com wifi do usuario (SSID, password) utilizando dados fornecidos pelo o servidor

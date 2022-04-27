@@ -27,6 +27,10 @@ class __KeyValueStorage:
 
     def get(self, key):
         print(f'Getting "{key}" from KVS')
+
+        if key not in self.store:
+            return False
+
         return self.store[key]
 
     def set(self, key, value):
