@@ -1,5 +1,6 @@
 from time import sleep
 from modules.auth import generate_token
+from modules.contact_cloud import save_sensor_data_to_cloud
 from modules.loading_handler import get_user_preferences, setup_pins_and_imports
 from modules.network import connect_to_wifi, test_internet_connection
 from modules.storage import get_kvs
@@ -40,7 +41,8 @@ def managing():
             managing()
 
         # As long as the user doesnt have any setting we don't need to proceed
-        while len(user_preferences.sensors) == 0 or len(user_preferences.actuators) == 0:
+        while len(user_preferences["sensors"]) == 0 or len(user_preferences["actuators"]) == 0:
+            print("Fetching user preferences...")
             user_preferences = get_user_preferences(device_id)
             sleep(5)
 
@@ -49,6 +51,7 @@ def managing():
             user_preferences)
 
         while True:
+            print("Main loop")
             sensors_data_bundle = []
 
             # Get all sensors data and saves to bundle
@@ -59,3 +62,14 @@ def managing():
                     "id": sensor_id,
                     "data": sensor_data,
                 })
+
+            # Toggles actuators
+            for _, actuator_instance in actuators_instance.items():
+                # This will force sensor data refetching, notice if some delay occurr it'll be here
+                actuator_instance.execute_triggers(sensors_instance)
+
+            # Send bundled data to cloud
+            save_sensor_data_to_cloud(sensors_data_bundle)
+            sleep(0.1)
+    else:
+        print("Configured is False")
