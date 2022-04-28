@@ -39,6 +39,7 @@ def connect_to_wifi(ssid, password):
 
             if(delta > TIME_LIMIT_TO_CONNECT_TO_WIFI):
                 print('Failed to connect to provided Wi-Fi network')
+                sta_if.active(False)
                 return False
 
     print('Conected to Wi-Fi network')
