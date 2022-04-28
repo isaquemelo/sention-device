@@ -3,7 +3,8 @@ from time import sleep
 from modules.auth import generate_token
 from modules.contact_cloud import save_sensor_data_to_cloud
 from modules.loading_handler import get_user_preferences, setup_pins_and_imports
-from modules.network import connect_to_wifi, test_internet_connection
+from modules.network import connect_to_wifi, start_wifi_network, test_internet_connection
+from modules.server import start_api
 from modules.storage import get_kvs
 
 
@@ -42,7 +43,7 @@ def managing():
             managing()
 
         # As long as the user doesnt have any setting we don't need to proceed
-        while len(user_preferences["sensors"]) == 0 or len(user_preferences["actuators"]) == 0:
+        while len(user_preferences["sensors"]) == 0 and len(user_preferences["actuators"]) == 0:
             print("Fetching user preferences...")
             user_preferences = get_user_preferences(device_id)
             sleep(5)
@@ -78,4 +79,5 @@ def managing():
             # print("delta", delta)
 
     else:
-        print("Configured is False")
+        start_wifi_network()
+        start_api()
