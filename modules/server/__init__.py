@@ -72,10 +72,16 @@ async def credentials(req, resp):
                 # Creates user token to be used to associate device to user
                 token = generate_token(user['username'], user['password'])
 
+                # If it fails to create a token it means that the credentials are invalid
+                if not token:
+                    print('Not able to login with the provided credentials')
+                    raise Exception
+
                 body = json.dumps({"accessCode": response_data['accessCode']})
 
                 response = request.post(ASSOCIATE_DEVICE_USER_URL, data=body, headers={
                     'Authorization': token, 'content-type': 'application/json'})
+
                 response_data = response.json()
 
                 # Saves associated userId
@@ -112,8 +118,8 @@ def start_api():
     # 0 (False) normal logging: requests and errors
     # 1 (True) debug logging
     # 2 extra debug logging
-    # app.run(debug=0, host='192.168.4.1', port=80)
-    app.run(debug=0, host='192.168.18.35', port=80)
+    app.run(debug=0, host='192.168.4.1', port=80)
+    # app.run(debug=0, host='192.168.18.35', port=80)
 
 
 def stop_api():
