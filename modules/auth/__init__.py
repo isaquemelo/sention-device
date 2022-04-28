@@ -10,11 +10,12 @@ def generate_token(username, password):
     response = request.post(AUTH_USER_URL, data=body, headers={
                             'content-type': 'application/json'})
 
+    if response.status_code != 200:
+        return False
+
     token = "Bearer " + response.json()["token"]
 
     kvs = get_kvs()
     kvs.set('AUTH_TOKEN', token)
 
     return token
-
-
