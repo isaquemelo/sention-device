@@ -6,5 +6,5 @@ from modules.loading_handler.DigitalSensor import DigitalSensor
 sensor_classes = {
     "BMP280": BMP280Sensor,
     "ANALOGIC": AnalogicSensor,
-    "DIGITAL": DigitalSensor
+    "DIGITAL": DigitalSensor,
 }

@@ -1,15 +1,9 @@
-from constants import CREATE_NEW_DEVICE_URL
-import libs.request as request
-from modules.loading_handler import get_user_preferences, loading_module, setup_pins_and_imports
+import machine
 from modules.manager import managing
-from modules.network import connect_to_wifi, start_wifi_network, stop_wifi_network, test_internet_connection
-from time import sleep
-from modules.contact_cloud import save_sensor_data_to_cloud
-
-from modules.server import start_api, stop_api
 from modules.storage import get_kvs
-import _thread
 
+machine.freq(240000000)
+print(machine.freq())
 
 # start_wifi_network()
 # connected = connect_to_wifi("PROXXIMA_206415-2.4G", "nazareno")
@@ -56,12 +50,11 @@ import _thread
 # sleep(30)
 # stop_api()
 # print("fim loop cabo")
-# kvs = get_kvs()
+kvs = get_kvs()
 # kvs.set('USER_LOGIN', 'isaquegbmelo2@gmail.com')
 # kvs.set('USER_PASSWORD', 'tester')
 # kvs.set('DEVICE_ID', '7aeaa7ac-3769-40ed-b36a-4ed70f15c272')
 # kvs.set('ACCESS_CODE', 'h3g8IllYv')
 # kvs.set('USER_ID', '8e18c316-1e2c-48fe-8079-16e54d27e244')
-# kvs.set('CONFIGURED', True)
-
+kvs.set('CONFIGURED', True)
 managing()

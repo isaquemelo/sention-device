@@ -1,3 +1,4 @@
+import _thread
 from time import sleep
 from modules.auth import generate_token
 from modules.contact_cloud import save_sensor_data_to_cloud
@@ -51,17 +52,17 @@ def managing():
             user_preferences)
 
         while True:
-            print("Main loop")
+            lock = _thread.allocate_lock()
+
             sensors_data_bundle = []
 
             # Get all sensors data and saves to bundle
             for sensor_id, sensor_instance in sensors_instance.items():
-                sensor_data = sensor_instance.get_data()
-
                 sensors_data_bundle.append({
                     "id": sensor_id,
-                    "data": sensor_data,
+                    "data": sensor_instance.get_data(),
                 })
+            # print("sensors_data_bundle", sensors_data_bundle)
 
             # Toggles actuators
             for _, actuator_instance in actuators_instance.items():
@@ -69,7 +70,12 @@ def managing():
                 actuator_instance.execute_triggers(sensors_instance)
 
             # Send bundled data to cloud
-            save_sensor_data_to_cloud(sensors_data_bundle)
-            sleep(0.1)
+            with lock:
+                save_sensor_data_to_cloud(sensors_data_bundle, lock)
+
+            # start_time = time.ticks_ms()
+            # delta = time.ticks_diff(time.ticks_ms(), start_time)
+            # print("delta", delta)
+
     else:
         print("Configured is False")
