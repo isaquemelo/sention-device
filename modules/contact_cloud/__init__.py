@@ -18,11 +18,12 @@ def _content(body, auth_token, lock):
     try:
         request.post(POST_SENSOR_DATA_BULK_URL, data=json.dumps(body), headers={
             'content-type': 'application/json', 'Authorization': auth_token}, timeout=5).close()
+        print("Sent data to server")
     except:
         print("Error during cocurrent saving data to server")
     finally:
         delta = time.ticks_diff(time.ticks_ms(), start_time)
-        print("response", delta)
+        # print("response", delta)
 
         lock.release()
         sys.exit(0)

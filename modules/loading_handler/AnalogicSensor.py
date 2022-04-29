@@ -2,6 +2,7 @@ from modules.loading_handler.ISensor import ISensor
 
 from machine import Pin, ADC
 
+
 class AnalogicSensor(ISensor):
     def __init__(self, port):
         adc = ADC(Pin(port))
@@ -9,4 +10,4 @@ class AnalogicSensor(ISensor):
         self.port = adc
 
     def get_data(self):
-        return self.port.read()
+        return {"value": self.port.read()}
