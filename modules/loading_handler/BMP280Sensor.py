@@ -12,8 +12,16 @@ class BMP280Sensor(ISensor):
 
     def get_data(self, dataSource=False):
         data = {}
-        data["TEMPERATURE"] = self.bmp.getTemp()
-        data["PRESSURE"] = self.bmp.getPress()
-        data["ALTITUDE"] = self.bmp.getAltitude()
+
+        try:
+            data["TEMPERATURE"] = self.bmp.getTemp()
+            data["PRESSURE"] = self.bmp.getPress()
+            data["ALTITUDE"] = self.bmp.getAltitude()
+        except:
+            data = {
+                "TEMPERATURE": 0,
+                "PRESSURE": 0,
+                "ALTITUDE": 0,
+            }
 
         return data[dataSource] if dataSource else data
