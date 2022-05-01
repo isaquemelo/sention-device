@@ -7,4 +7,4 @@ class DigitalSensor(ISensor):
         self.port = Pin(port, Pin.IN)
 
     def get_data(self):
-        return self.port.value()
+        return {"value": self.port.value()}
