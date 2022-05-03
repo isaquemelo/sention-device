@@ -23,10 +23,10 @@ def _content(body, auth_token, lock):
         print("Error during cocurrent saving data to server")
     finally:
         delta = time.ticks_diff(time.ticks_ms(), start_time)
-        # print("response", delta)
+        # print("delta", delta)
 
         lock.release()
-        sys.exit(0)
+        _thread.exit()
 
 
 def save_sensor_data_to_cloud(list_sensors_data, lock):

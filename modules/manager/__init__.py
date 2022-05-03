@@ -52,9 +52,9 @@ def managing():
         (sensors_instance, actuators_instance) = setup_pins_and_imports(
             user_preferences)
 
-        while True:
-            lock = _thread.allocate_lock()
+        lock = _thread.allocate_lock()
 
+        while True:
             sensors_data_bundle = []
 
             # Get all sensors data and saves to bundle
