@@ -15,7 +15,9 @@ from modules.storage import get_kvs
 
 
 async def ping(req, resp):
-    await picoweb.start_response(resp, content_type="application/json; charset=utf-8")
+    headers = {"Access-Control-Allow-Origin": "*"}
+
+    await picoweb.start_response(resp, content_type="application/json; charset=utf-8", headers=headers)
     await resp.awrite(json.dumps({"ping": "pong"}))
 
 
@@ -40,6 +42,8 @@ def reboot(req, resp):
 
 
 async def credentials(req, resp):
+    headers = {"Access-Control-Allow-Origin": "*"}
+
     if req.method == "POST":
         body = await req.read_json_body()
 
@@ -91,7 +95,7 @@ async def credentials(req, resp):
                 kvs.set('CONFIGURED', True)
 
                 await picoweb.start_response(
-                    resp, content_type="application/json; charset=utf-8")
+                    resp, content_type="application/json; charset=utf-8", headers=headers)
                 await resp.awrite(response.text)
 
             except Exception as e:
