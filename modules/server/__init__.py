@@ -44,6 +44,16 @@ def reboot(req, resp):
 async def credentials(req, resp):
     headers = {"Access-Control-Allow-Origin": "*"}
 
+    if req.method == "OPTIONS":
+        headers = {
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*"
+        }
+
+        return await picoweb.start_response(
+            resp, content_type="application/json; charset=utf-8", headers=headers)
+
     if req.method == "POST":
         body = await req.read_json_body()
 
