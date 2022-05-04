@@ -21,9 +21,19 @@ async def ping(req, resp):
     await resp.awrite(json.dumps({"ping": "pong"}))
 
 
-def reboot(req, resp):
+async def reboot(req, resp):
+    if req.method == "OPTIONS":
+        headers = {
+            "Access-Control-Allow-Methods": "POST",
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*"
+        }
+
+        return await picoweb.start_response(
+            resp, content_type="application/json; charset=utf-8", headers=headers)
+
     if req.method == "POST":
-        body = yield from req.read_json_body()
+        body = await req.read_json_body()
 
         user = body['user']
         username = user['username']
@@ -34,9 +44,9 @@ def reboot(req, resp):
         if username == kvs.get('USER_LOGIN') and password == kvs.get('USER_PASSWORD'):
             machine.reset()
         else:
-            return (yield from picoweb.http_error(resp, "500"))
+            return (await picoweb.http_error(resp, "500"))
 
-    yield from picoweb.http_error(resp, "500")
+    await picoweb.http_error(resp, "500")
 
     # await picoweb.http_error(resp, "500")
 
