@@ -48,9 +48,14 @@ def managing():
             user_preferences = get_user_preferences(device_id)
             sleep(5)
 
-        # Generate sensors and actuators instances for further usage
-        (sensors_instance, actuators_instance) = setup_pins_and_imports(
-            user_preferences)
+        try:
+            # Generate sensors and actuators instances for further usage
+            (sensors_instance, actuators_instance) = setup_pins_and_imports(
+                user_preferences)
+        except:
+            print("Error while setting up pins and imports")
+            sleep(3)
+            managing()
 
         lock = _thread.allocate_lock()
 
