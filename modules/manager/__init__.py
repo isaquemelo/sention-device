@@ -56,23 +56,32 @@ def managing():
 
         while True:
             sensors_data_bundle = []
+            
+            try:
+                # Get all sensors data and saves to bundle
+                for sensor_id, sensor_instance in sensors_instance.items():
+                    sensors_data_bundle.append({
+                        "id": sensor_id,
+                        "data": sensor_instance.get_data(),
+                    })
+                # print("sensors_data_bundle", sensors_data_bundle)
+            except:
+                print("Error during processing sensor instances")
 
-            # Get all sensors data and saves to bundle
-            for sensor_id, sensor_instance in sensors_instance.items():
-                sensors_data_bundle.append({
-                    "id": sensor_id,
-                    "data": sensor_instance.get_data(),
-                })
-            # print("sensors_data_bundle", sensors_data_bundle)
+            try:
+                # Toggles actuators
+                for _, actuator_instance in actuators_instance.items():
+                    # This will force sensor data refetching, notice if some delay occurr it'll be here
+                    actuator_instance.execute_triggers(sensors_instance)
+            except:
+                print("Error during triggers executioning")
 
-            # Toggles actuators
-            for _, actuator_instance in actuators_instance.items():
-                # This will force sensor data refetching, notice if some delay occurr it'll be here
-                actuator_instance.execute_triggers(sensors_instance)
-
-            # Send bundled data to cloud
-            with lock:
-                save_sensor_data_to_cloud(sensors_data_bundle, lock)
+            try:
+                # Send bundled data to cloud
+                with lock:
+                    save_sensor_data_to_cloud(sensors_data_bundle, lock)
+            except:
+                print("Error during sending proceedure")
 
             # start_time = time.ticks_ms()
             # delta = time.ticks_diff(time.ticks_ms(), start_time)
