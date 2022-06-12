@@ -39,6 +39,6 @@ class DigitalActuator(IActuator):
             if logic_operator == "GREATER_THAN":
                 if(sensor_value > value):
                     self.do_action(action)
-            elif logic_operator == "SMALLER_THAN":
+            elif logic_operator == "LESS_THAN":
                 if(sensor_value < value):
                     self.do_action(action)
