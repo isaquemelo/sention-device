@@ -14,6 +14,15 @@ from modules.network import connect_to_wifi
 from modules.storage import get_kvs
 
 
+async def server(req, resp):
+    headers = {"Access-Control-Allow-Origin": "*"}
+    await picoweb.start_response(resp, headers=headers)
+    await resp.awrite("HTTP/1.0 200 OK\r\n")
+    await resp.awrite("Content-Type: text/html\r\n")
+    await resp.awrite("\r\n")
+    await resp.awrite('<body><script>onmessage=a=>{let b=a.ports[0];fetch(...a.data).then(a=>{let c={bodyUsed:!1,headers:[...a.headers],ok:a.ok,redirected:a.redurected,status:a.status,statusText:a.statusText,type:a.type,url:a.url};b.postMessage(c);let e=a.body.getReader(),d=()=>e.read().then(({value:c,done:a})=>a?b.postMessage(a):(b.postMessage(c),d()));d()})}</script></body>')
+
+
 async def ping(req, resp):
     headers = {"Access-Control-Allow-Origin": "*"}
 
@@ -51,6 +60,50 @@ async def reboot(req, resp):
     # await picoweb.http_error(resp, "500")
 
 
+def qs_parse(qs):
+
+    parameters = {}
+    ampersandSplit = qs.split("&")
+
+    for element in ampersandSplit:
+        equalSplit = element.split("=")
+        parameters[equalSplit[0]] = equalSplit[1]
+
+    return parameters
+
+
+def unquote(string):
+    """unquote('abc%20def') -> b'abc def'.
+
+    Note: if the input is a str instance it is encoded as UTF-8.
+    This is only an issue if it contains unescaped non-ASCII characters,
+    which URIs should not.
+    """
+    if not string:
+        return b''
+
+    if isinstance(string, str):
+        string = string.encode('utf-8')
+
+    bits = string.split(b'%')
+    if len(bits) == 1:
+        return string
+
+    res = bytearray(bits[0])
+    append = res.append
+    extend = res.extend
+
+    for item in bits[1:]:
+        try:
+            append(int(item[:2], 16))
+            extend(item[2:])
+        except KeyError:
+            append(b'%')
+            extend(item)
+
+    return bytes(res)
+
+
 async def credentials(req, resp):
     headers = {"Access-Control-Allow-Origin": "*"}
 
@@ -64,8 +117,12 @@ async def credentials(req, resp):
         return await picoweb.start_response(
             resp, content_type="application/json; charset=utf-8", headers=headers)
 
-    if req.method == "POST":
-        body = await req.read_json_body()
+    if req.method == "GET":
+        queryString = req.qs
+        parameters = qs_parse(queryString)
+
+        body = json.loads(unquote(parameters['body']))
+        # body = await req.read_json_body()
 
         network = body['network']
         user = body['user']
@@ -116,7 +173,7 @@ async def credentials(req, resp):
 
                 await picoweb.start_response(
                     resp, content_type="application/json; charset=utf-8", headers=headers)
-                await resp.awrite(response.text)
+                await resp.awrite(json.dumps({"ping": "pong"}))
 
             except Exception as e:
                 print(e)
@@ -128,6 +185,7 @@ async def credentials(req, resp):
 
 
 ROUTES = [
+    ("/server.html", server),
     ("/ping", ping),
     ("/credentials", credentials),
     ("/reboot", reboot),
